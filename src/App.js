@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
   const [data, setData] = useState({});
@@ -8,10 +8,6 @@ function App() {
   const key = process.env.REACT_APP_API_KEY;
 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=${unit}`;
-
-  const toggleUnit = () => {
-    setUnit((prevUnit) => (prevUnit === 'metric' ? 'imperial' : 'metric'));
-  };
 
   const searchLocation = (e) => {
     if (e.key === 'Enter') {
@@ -25,6 +21,22 @@ function App() {
     }
   };
 
+  const toggleUnit = () => {
+    setUnit((prevUnit) => (prevUnit === 'metric' ? 'imperial' : 'metric'));
+  };
+
+  const convertTemp = (temp) => {
+    return unit === 'metric' ? temp.toFixed() : (temp * 1.8 + 32).toFixed();
+  };
+
+  const convertFeelsLike = (temp) => {
+    return unit === 'metric' ? temp.toFixed() : (temp * 1.8 + 32).toFixed();
+  };
+
+  const convertSpeed = (speed) => {
+    return unit === 'metric' ? speed : (speed * 2.23694).toFixed(2);
+  };
+
   return (
     <div className="app">
       <div className="search">
@@ -36,7 +48,7 @@ function App() {
           type="text"
         />
         <p className="button" onClick={toggleUnit}>
-          &deg;{unit === 'metric' ? 'C' : 'F'}
+          &deg;{unit === 'metric' ? 'F' : 'C'}
         </p>
       </div>
 
@@ -48,7 +60,8 @@ function App() {
           <div className="temp">
             {data?.main && (
               <h1>
-                {data.main.temp.toFixed()}&deg;{unit === 'metric' ? 'C' : 'F'}
+                {convertTemp(data.main.temp)}
+                &deg;{unit === 'metric' ? 'C' : 'F'}
               </h1>
             )}
           </div>
@@ -62,7 +75,7 @@ function App() {
             <div className="feels">
               {data?.main && (
                 <p className="bold">
-                  {data.main.feels_like.toFixed()}&deg;
+                  {convertFeelsLike(data.main.feels_like)}&deg;
                   {unit === 'metric' ? 'C' : 'F'}
                 </p>
               )}
@@ -74,7 +87,10 @@ function App() {
             </div>
             <div className="wind">
               {data?.wind && (
-                <p className="bold">{data.wind.speed.toFixed()} MPH</p>
+                <p className="bold">
+                  {convertSpeed(data.wind.speed)}{' '}
+                  {unit === 'metric' ? 'M/S' : 'MPH'}
+                </p>
               )}
               <p>Wind Speed</p>
             </div>
