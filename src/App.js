@@ -8,8 +8,27 @@ function App() {
 
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}`;
 
+  const searchLocation = (e) => {
+    if (e.key === 'Enter') {
+      fetch(url).then((res) => {
+        setData(res);
+        console.log(res);
+      });
+    }
+  };
+
   return (
     <div className="app">
+      <div className="search">
+        <input
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          onKeyPress={searchLocation}
+          placeholder="Enter Location"
+          type="text"
+        />
+      </div>
+
       <div className="container">
         <div className="top">
           <div className="location">
