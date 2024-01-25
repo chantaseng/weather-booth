@@ -1,0 +1,31 @@
+{
+  "coord": { "lon": -73.5878, "lat": 45.5088 },
+  "weather": [
+    { "id": 601, "main": "Snow", "description": "snow", "icon": "13n" }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 267.57,
+    "feels_like": 262.36,
+    "temp_min": 265.98,
+    "temp_max": 268.75,
+    "pressure": 1022,
+    "humidity": 94
+  },
+  "visibility": 4023,
+  "wind": { "speed": 3.6, "deg": 10 },
+  "snow": { "1h": 0.94 },
+  "clouds": { "all": 100 },
+  "dt": 1706155865,
+  "sys": {
+    "type": 2,
+    "id": 2013133,
+    "country": "CA",
+    "sunrise": 1706099058,
+    "sunset": 1706132882
+  },
+  "timezone": -18000,
+  "id": 6077243,
+  "name": "Montreal",
+  "cod": 200
+}
