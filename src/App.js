@@ -10,10 +10,13 @@ function App() {
 
   const searchLocation = (e) => {
     if (e.key === 'Enter') {
-      fetch(url).then((res) => {
-        setData(res);
-        console.log(res);
-      });
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          setData(data);
+          console.log(data);
+        });
+      setLocation('');
     }
   };
 
@@ -23,7 +26,7 @@ function App() {
         <input
           value={location}
           onChange={(e) => setLocation(e.target.value)}
-          onKeyPress={searchLocation}
+          onKeyDown={searchLocation}
           placeholder="Enter Location"
           type="text"
         />
@@ -32,29 +35,39 @@ function App() {
       <div className="container">
         <div className="top">
           <div className="location">
-            <p>Dallas</p>
+            <p>{data.name}</p>
           </div>
           <div className="temp">
-            <h1>60&deg;C</h1>
+            {data?.main && <h1>{data.main.temp}&deg;F</h1>}
+            {/* <h1>{data.main.temp}&deg;C</h1> */}
           </div>
           <div className="description">
-            <p>Cloud</p>
+            {data?.weather && <p>{data.weather[0].main}</p>}
+            {/* <p>{data.weather[0].main}</p> */}
           </div>
         </div>
-        <div className="bottom">
-          <div className="feels">
-            <p className="bold">65&deg;C</p>
-            <p>Feels Like</p>
+
+        {data.name !== undefined && (
+          <div className="bottom">
+            <div className="feels">
+              {data?.main && (
+                <p className="bold">{data.main.feels_like}&deg;F</p>
+              )}
+              {/* <p className="bold">{data.main.feels_like}&deg;C</p> */}
+              <p>Feels Like</p>
+            </div>
+            <div className="humidity">
+              {data?.main && <p className="bold">{data.main.humidity}%</p>}
+              {/* <p className="bold">{data.main.humidity}%</p> */}
+              <p>Humidity</p>
+            </div>
+            <div className="wind">
+              {data?.wind && <p className="bold">{data.wind.speed} MPH</p>}
+              {/* <p className="bold">{data.wind.speed} MPH</p> */}
+              <p>Wind Speed</p>
+            </div>
           </div>
-          <div className="humidity">
-            <p className="bold">20%</p>
-            <p>Humidity</p>
-          </div>
-          <div className="wind">
-            <p className="bold">12 MPH</p>
-            <p>Wind Speed</p>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
