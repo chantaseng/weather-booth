@@ -1,5 +1,12 @@
+import { useState } from 'react';
+
 function App() {
-  // const url = `https://api.openweathermap.org/data/2.5/weather?q=montreal&appid=9535538658a6fb5ee78f3037d4843bea`;
+  const [data, setData] = useState({});
+  const [location, setLocation] = useState('');
+
+  const key = process.env.REACT_APP_API_KEY;
+
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}`;
 
   return (
     <div className="app">
@@ -17,13 +24,16 @@ function App() {
         </div>
         <div className="bottom">
           <div className="feels">
-            <p>65&deg;C</p>
+            <p className="bold">65&deg;C</p>
+            <p>Feels Like</p>
           </div>
           <div className="humidity">
-            <p>20%</p>
+            <p className="bold">20%</p>
+            <p>Humidity</p>
           </div>
           <div className="wind">
-            <p>12 MPH</p>
+            <p className="bold">12 MPH</p>
+            <p>Wind Speed</p>
           </div>
         </div>
       </div>
