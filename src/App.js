@@ -25,8 +25,43 @@ function App() {
     setUnit((prevUnit) => (prevUnit === 'metric' ? 'imperial' : 'metric'));
   };
 
-  const convertTemp = (temp) => {
+  // const toggleUnit = () => {
+  //   setUnit((prevUnit) => {
+  //     const newUnit = prevUnit === 'metric' ? 'imperial' : 'metric';
+
+  //     if (data.main) {
+  //       setData((prevData) => ({
+  //         ...prevData,
+  //         main: {
+  //           ...prevData.main,
+  //           temp:
+  //             newUnit === 'metric'
+  //               ? farenheitToCelsius(prevData.main.temp)
+  //               : celsiusToFarenheit(prevData.main.temp),
+  //         },
+  //       }));
+  //     }
+
+  //     return newUnit;
+  //   });
+  // };
+
+  // const farenheitToCelsius = (temp) => (((temp - 32) * 5) / 9).toFixed();
+
+  // const celsiusToFarenheit = (temp) => (temp * 1.8 + 32).toFixed();
+
+  // const convertTemp = (temp) => {
+  //   return unit === 'metric' ? temp.toFixed() : (temp * 1.8 + 32).toFixed();
+  // };
+
+  const convertTempToFarenheit = (temp) => {
     return unit === 'metric' ? temp.toFixed() : (temp * 1.8 + 32).toFixed();
+  };
+
+  const convertTempToCelsius = (temp) => {
+    return unit === 'imperial'
+      ? temp.toFixed()
+      : (((temp - 32) * 5) / 9).toFixed();
   };
 
   const convertFeelsLike = (temp) => {
@@ -60,7 +95,10 @@ function App() {
           <div className="temp">
             {data?.main && (
               <h1>
-                {convertTemp(data.main.temp)}
+                {/* {convertTemp(data.main.temp)} */}
+                {unit === 'metric'
+                  ? convertTempToFarenheit(data.main.temp)
+                  : convertTempToCelsius(data.main.temp)}
                 &deg;{unit === 'metric' ? 'C' : 'F'}
               </h1>
             )}
