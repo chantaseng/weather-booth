@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react';
 
 function App() {
   const [data, setData] = useState({});
+  const [userInput, setUserInput] = useState('');
   const [location, setLocation] = useState('');
   const [unit, setUnit] = useState('metric');
 
   const key = process.env.REACT_APP_API_KEY;
 
-  // function that fetch data from API. Requires a unit parameter because of the toggleUnit function(if you want to have the temperature in metric or imperial)
-  const fetchWeatherData = (unit) => {
+  // function that fetch data from API. Requires a unit parameter because of the toggleUnit function(if you want to have the temperature in metric or imperial) and the location parameter to be able to reset the userInput to empty string
+  const fetchWeatherData = (unit, location) => {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=${unit}`;
     fetch(url)
       .then((res) => res.json())
@@ -16,25 +17,27 @@ function App() {
         setData(data);
         console.log(data);
       });
+    setUserInput('');
   };
 
-  // UseEffect will only run when the unit state changes
-  useEffect(() => {
-    fetchWeatherData(unit);
-  }, [unit]); // Fetch data when location or unit changes
+  // I thought i needed the useEffect hook to make the logic work, but it was just fetching twice with the toggleUnit function
+  // useEffect(() => {
+  //   fetchWeatherData(unit, location);
+  // }, [unit]); // Fetch data when location or unit changes
 
-  // searchLocation function is fired up when user input a location, will trigger fetchWeatherData function
+  // searchLocation function is fired up when user input a location, will trigger fetchWeatherData function. The unit by default is 'metric' and the userInput will be the location parameter for the fetchWeatherData function. userInput will then set the location state so we can set the userInput back to empty string(line 20)
   const searchLocation = (e) => {
     if (e.key === 'Enter') {
-      fetchWeatherData(unit);
+      fetchWeatherData(unit, userInput);
+      setLocation(userInput);
     }
   };
 
-  // This function sets the unit state. When you change the unit temperature, it will set the state to the variable newUnit and it will you this variable as parameter for the fetchWeatherData function, thus showing the new data on the UI. Line 38 is really IMPORTANT, because it return the new unit value.(update unit state)
+  // This function sets the unit state. When you change the unit temperature, it will set the state to the variable newUnit and it will use this variable as parameter for the fetchWeatherData function, thus showing the new data on the UI. Line 41 is really IMPORTANT, because it return the new unit value.(update unit state)
   const toggleUnit = () => {
     setUnit((prevUnit) => {
       const newUnit = prevUnit === 'metric' ? 'imperial' : 'metric';
-      fetchWeatherData(newUnit);
+      fetchWeatherData(newUnit, location);
       return newUnit;
     });
   };
@@ -43,8 +46,8 @@ function App() {
     <div className="app">
       <div className="search">
         <input
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
           onKeyDown={searchLocation}
           placeholder="Enter City"
           type="text"
