@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 function App() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState('');
   const [unit, setUnit] = useState('metric');
+  const [userInput, setUserInput] = useState('');
+  // let { location } = useParams();
 
   const key = process.env.REACT_APP_API_KEY;
 
@@ -21,30 +24,33 @@ function App() {
     }
   };
 
+  // const fetchWeatherData = (e) => {
+  //   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=${unit}`;
+  //   fetch(url)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setData(data);
+  //       console.log(data);
+  //     });
+  // };
+
+  // const searchLocation = (e) => {
+  //   if (e.key === 'Enter') {
+  //     fetchWeatherData();
+  //     setLocation('');
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (location) {
+  //     fetchWeatherData();
+  //   }
+  // }, [location, unit]);
+
   const toggleUnit = () => {
     setUnit((prevUnit) => (prevUnit === 'metric' ? 'imperial' : 'metric'));
+    console.log(location);
   };
-
-  // const toggleUnit = () => {
-  //   setUnit((prevUnit) => {
-  //     const newUnit = prevUnit === 'metric' ? 'imperial' : 'metric';
-
-  //     if (data.main) {
-  //       setData((prevData) => ({
-  //         ...prevData,
-  //         main: {
-  //           ...prevData.main,
-  //           temp:
-  //             newUnit === 'metric'
-  //               ? farenheitToCelsius(prevData.main.temp)
-  //               : celsiusToFarenheit(prevData.main.temp),
-  //         },
-  //       }));
-  //     }
-
-  //     return newUnit;
-  //   });
-  // };
 
   // const farenheitToCelsius = (temp) => (((temp - 32) * 5) / 9).toFixed();
 
@@ -54,15 +60,15 @@ function App() {
   //   return unit === 'metric' ? temp.toFixed() : (temp * 1.8 + 32).toFixed();
   // };
 
-  const convertTempToFarenheit = (temp) => {
-    return unit === 'metric' ? temp.toFixed() : (temp * 1.8 + 32).toFixed();
-  };
+  // const convertTempToFarenheit = (temp) => {
+  //   return unit === 'metric' ? temp.toFixed() : (temp * 1.8 + 32).toFixed();
+  // };
 
-  const convertTempToCelsius = (temp) => {
-    return unit === 'imperial'
-      ? temp.toFixed()
-      : (((temp - 32) * 5) / 9).toFixed();
-  };
+  // const convertTempToCelsius = (temp) => {
+  //   return unit === 'imperial'
+  //     ? temp.toFixed()
+  //     : (((temp - 32) * 5) / 9).toFixed();
+  // };
 
   const convertFeelsLike = (temp) => {
     return unit === 'metric' ? temp.toFixed() : (temp * 1.8 + 32).toFixed();
@@ -95,10 +101,11 @@ function App() {
           <div className="temp">
             {data?.main && (
               <h1>
+                {data.main.temp.toFixed()}
                 {/* {convertTemp(data.main.temp)} */}
-                {unit === 'metric'
+                {/* {unit === 'metric'
                   ? convertTempToFarenheit(data.main.temp)
-                  : convertTempToCelsius(data.main.temp)}
+                  : convertTempToCelsius(data.main.temp)} */}
                 &deg;{unit === 'metric' ? 'C' : 'F'}
               </h1>
             )}
