@@ -20,36 +20,25 @@ function App() {
           setData(data);
           console.log(data);
         });
+      setUserInput(location);
       setLocation('');
+      console.log(location);
+      console.log(userInput);
     }
   };
-
-  // const fetchWeatherData = (e) => {
-  //   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=${unit}`;
-  //   fetch(url)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setData(data);
-  //       console.log(data);
-  //     });
-  // };
-
-  // const searchLocation = (e) => {
-  //   if (e.key === 'Enter') {
-  //     fetchWeatherData();
-  //     setLocation('');
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (location) {
-  //     fetchWeatherData();
-  //   }
-  // }, [location, unit]);
 
   const toggleUnit = () => {
     setUnit((prevUnit) => (prevUnit === 'metric' ? 'imperial' : 'metric'));
     console.log(location);
+    // console.log(userInput);
+
+    const unitUrl = `https://api.openweathermap.org/data/2.5/weather?q=${userInput}&appid=${key}&units=${unit}`;
+    fetch(unitUrl)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data);
+        console.log(data);
+      });
   };
 
   // const farenheitToCelsius = (temp) => (((temp - 32) * 5) / 9).toFixed();
