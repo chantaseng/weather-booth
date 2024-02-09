@@ -47,8 +47,8 @@ h1 {
 
 .app .button {
   position: absolute;
-  top: 5%;
-  right: 5%;
+  top: 27%;
+  right: 52%;
   cursor: pointer;
 }
 
@@ -80,6 +80,13 @@ h1 {
 .app .top {
   width: 100%;
   margin: 1rem auto;
+  position: relative;
+}
+
+.app .top .temp span {
+  position: absolute;
+  right: 60%;
+  top: 30%;
 }
 
 .app .description {

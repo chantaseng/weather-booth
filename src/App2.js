@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function App() {
+function App2() {
   const [data, setData] = useState({});
   const [userInput, setUserInput] = useState('');
   const [location, setLocation] = useState('');
@@ -53,8 +53,7 @@ function App() {
           type="text"
         />
         <p className="button" onClick={toggleUnit}>
-          {/* &deg;C | &deg;F */}
-          {/* &deg;{unit === 'metric' ? 'F' : 'C'} */}
+          &deg;{unit === 'metric' ? 'F' : 'C'}
         </p>
       </div>
 
@@ -65,13 +64,10 @@ function App() {
           </div>
           <div className="temp">
             {data?.main && (
-              <>
-                <h1>
-                  {data.main.temp.toFixed()}
-                  &deg;{unit === 'metric' ? 'C' : 'F'}
-                </h1>
-                <span onClick={toggleUnit}>&deg;C | &deg;F</span>
-              </>
+              <h1>
+                {data.main.temp.toFixed()}
+                &deg;{unit === 'metric' ? 'C' : 'F'}
+              </h1>
             )}
           </div>
           <div className="description">
@@ -110,4 +106,4 @@ function App() {
   );
 }
 
-export default App;
+export default App2;
