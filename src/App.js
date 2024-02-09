@@ -1,39 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 function App() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState('');
   const [unit, setUnit] = useState('metric');
-  const [userInput, setUserInput] = useState('');
-  // let { location } = useParams();
 
   const key = process.env.REACT_APP_API_KEY;
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=${unit}`;
-
-  const searchLocation = (e) => {
-    if (e.key === 'Enter') {
-      fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
-          setData(data);
-          console.log(data);
-        });
-      setUserInput(location);
-      setLocation('');
-      console.log(location);
-      console.log(userInput);
-    }
-  };
-
-  const toggleUnit = () => {
-    setUnit((prevUnit) => (prevUnit === 'metric' ? 'imperial' : 'metric'));
-    console.log(location);
-    // console.log(userInput);
-
-    const unitUrl = `https://api.openweathermap.org/data/2.5/weather?q=${userInput}&appid=${key}&units=${unit}`;
-    fetch(unitUrl)
+  // function that fetch data from API. Requires a unit parameter because of the toggleUnit function(if you want to have the temperature in metric or imperial)
+  const fetchWeatherData = (unit) => {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=${unit}`;
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
@@ -41,30 +18,25 @@ function App() {
       });
   };
 
-  // const farenheitToCelsius = (temp) => (((temp - 32) * 5) / 9).toFixed();
+  // UseEffect will only run when the unit state changes
+  useEffect(() => {
+    fetchWeatherData(unit);
+  }, [unit]); // Fetch data when location or unit changes
 
-  // const celsiusToFarenheit = (temp) => (temp * 1.8 + 32).toFixed();
-
-  // const convertTemp = (temp) => {
-  //   return unit === 'metric' ? temp.toFixed() : (temp * 1.8 + 32).toFixed();
-  // };
-
-  // const convertTempToFarenheit = (temp) => {
-  //   return unit === 'metric' ? temp.toFixed() : (temp * 1.8 + 32).toFixed();
-  // };
-
-  // const convertTempToCelsius = (temp) => {
-  //   return unit === 'imperial'
-  //     ? temp.toFixed()
-  //     : (((temp - 32) * 5) / 9).toFixed();
-  // };
-
-  const convertFeelsLike = (temp) => {
-    return unit === 'metric' ? temp.toFixed() : (temp * 1.8 + 32).toFixed();
+  // searchLocation function is fired up when user input a location, will trigger fetchWeatherData function
+  const searchLocation = (e) => {
+    if (e.key === 'Enter') {
+      fetchWeatherData(unit);
+    }
   };
 
-  const convertSpeed = (speed) => {
-    return unit === 'metric' ? speed : (speed * 2.23694).toFixed(2);
+  // This function sets the unit state. When you change the unit temperature, it will set the state to the variable newUnit and it will you this variable as parameter for the fetchWeatherData function, thus showing the new data on the UI. Line 38 is really IMPORTANT, because it return the new unit value.(update unit state)
+  const toggleUnit = () => {
+    setUnit((prevUnit) => {
+      const newUnit = prevUnit === 'metric' ? 'imperial' : 'metric';
+      fetchWeatherData(newUnit);
+      return newUnit;
+    });
   };
 
   return (
@@ -74,7 +46,7 @@ function App() {
           value={location}
           onChange={(e) => setLocation(e.target.value)}
           onKeyDown={searchLocation}
-          placeholder="Enter Location"
+          placeholder="Enter City"
           type="text"
         />
         <p className="button" onClick={toggleUnit}>
@@ -91,10 +63,6 @@ function App() {
             {data?.main && (
               <h1>
                 {data.main.temp.toFixed()}
-                {/* {convertTemp(data.main.temp)} */}
-                {/* {unit === 'metric'
-                  ? convertTempToFarenheit(data.main.temp)
-                  : convertTempToCelsius(data.main.temp)} */}
                 &deg;{unit === 'metric' ? 'C' : 'F'}
               </h1>
             )}
@@ -109,7 +77,7 @@ function App() {
             <div className="feels">
               {data?.main && (
                 <p className="bold">
-                  {convertFeelsLike(data.main.feels_like)}&deg;
+                  {data.main.feels_like.toFixed()}&deg;
                   {unit === 'metric' ? 'C' : 'F'}
                 </p>
               )}
@@ -122,7 +90,7 @@ function App() {
             <div className="wind">
               {data?.wind && (
                 <p className="bold">
-                  {convertSpeed(data.wind.speed)}{' '}
+                  {data.wind.speed.toFixed()}{' '}
                   {unit === 'metric' ? 'M/S' : 'MPH'}
                 </p>
               )}
