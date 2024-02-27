@@ -44,7 +44,10 @@ function App2() {
   };
 
   const handleClick = (letter) => {
-    setActiveLetter(letter);
+    if (letter !== activeLetter) {
+      setActiveLetter(letter);
+      toggleUnit();
+    }
   };
 
   return (
@@ -71,7 +74,7 @@ function App2() {
                   {data.main.temp.toFixed()}
                   &deg;{unit === 'metric' ? 'C' : 'F'}
                 </h1>
-                <span onClick={toggleUnit}>
+                <span>
                   <p
                     className={`${
                       activeLetter === 'C' ? 'active' : ''
