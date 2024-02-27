@@ -51,10 +51,6 @@ h1 {
   right: 52%;
 }
 
-.app .button .active {
-  color: red;
-}
-
 .app input {
   padding: 0.7rem 1.5rem;
   font-size: 1.2rem;
@@ -88,9 +84,17 @@ h1 {
 
 .app .top .temp span {
   position: absolute;
-  right: 60%;
+  right: 56%;
   top: 30%;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #bdbdbd;
+}
+
+.active {
+  color: #fff;
 }
 
 .app .description {

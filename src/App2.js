@@ -71,7 +71,21 @@ function App2() {
                   {data.main.temp.toFixed()}
                   &deg;{unit === 'metric' ? 'C' : 'F'}
                 </h1>
-                <span onClick={toggleUnit}>yo</span>
+                <span onClick={toggleUnit}>
+                  <p
+                    className={activeLetter === 'C' ? 'active' : ''}
+                    onClick={() => handleClick('C')}
+                  >
+                    &deg;C
+                  </p>
+                  <p>&nbsp;|&nbsp;</p>
+                  <p
+                    className={activeLetter === 'F' ? 'active' : ''}
+                    onClick={() => handleClick('F')}
+                  >
+                    &deg;F
+                  </p>
+                </span>
               </>
             )}
           </div>
