@@ -73,14 +73,18 @@ function App2() {
                 </h1>
                 <span onClick={toggleUnit}>
                   <p
-                    className={activeLetter === 'C' ? 'active' : ''}
+                    className={`${
+                      activeLetter === 'C' ? 'active' : ''
+                    } clickable`}
                     onClick={() => handleClick('C')}
                   >
                     &deg;C
                   </p>
                   <p>&nbsp;|&nbsp;</p>
                   <p
-                    className={activeLetter === 'F' ? 'active' : ''}
+                    className={`${
+                      activeLetter === 'F' ? 'active' : ''
+                    } clickable`}
                     onClick={() => handleClick('F')}
                   >
                     &deg;F

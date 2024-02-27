@@ -86,7 +86,7 @@ h1 {
   position: absolute;
   right: 56%;
   top: 30%;
-  cursor: pointer;
+  /* cursor: pointer; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -95,6 +95,10 @@ h1 {
 
 .active {
   color: #fff;
+}
+
+.clickable {
+  cursor: pointer;
 }
 
 .app .description {
