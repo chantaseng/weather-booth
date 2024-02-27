@@ -52,10 +52,6 @@ function App() {
           placeholder="Enter City"
           type="text"
         />
-        <p className="button" onClick={toggleUnit}>
-          {/* &deg;C | &deg;F */}
-          {/* &deg;{unit === 'metric' ? 'F' : 'C'} */}
-        </p>
       </div>
 
       <div className="container">
