@@ -86,7 +86,6 @@ h1 {
   position: absolute;
   right: 56%;
   top: 30%;
-  /* cursor: pointer; */
   display: flex;
   justify-content: space-between;
   align-items: center;

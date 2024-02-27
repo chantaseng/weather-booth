@@ -5,6 +5,7 @@ function App() {
   const [userInput, setUserInput] = useState('');
   const [location, setLocation] = useState('');
   const [unit, setUnit] = useState('metric');
+  const [activeLetter, setActiveLetter] = useState('C');
 
   const key = process.env.REACT_APP_API_KEY;
 
@@ -42,6 +43,13 @@ function App() {
     });
   };
 
+  const handleClick = (letter) => {
+    if (letter !== activeLetter) {
+      setActiveLetter(letter);
+      toggleUnit();
+    }
+  };
+
   return (
     <div className="app">
       <div className="search">
@@ -66,7 +74,25 @@ function App() {
                   {data.main.temp.toFixed()}
                   &deg;{unit === 'metric' ? 'C' : 'F'}
                 </h1>
-                <span onClick={toggleUnit}>&deg;C | &deg;F</span>
+                <span>
+                  <p
+                    className={`${
+                      activeLetter === 'C' ? 'active' : ''
+                    } clickable`}
+                    onClick={() => handleClick('C')}
+                  >
+                    &deg;C
+                  </p>
+                  <p>&nbsp;|&nbsp;</p>
+                  <p
+                    className={`${
+                      activeLetter === 'F' ? 'active' : ''
+                    } clickable`}
+                    onClick={() => handleClick('F')}
+                  >
+                    &deg;F
+                  </p>
+                </span>
               </>
             )}
           </div>

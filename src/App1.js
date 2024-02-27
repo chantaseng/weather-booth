@@ -1,11 +1,10 @@
 import { useState } from 'react';
 
-function App2() {
+function App1() {
   const [data, setData] = useState({});
   const [userInput, setUserInput] = useState('');
   const [location, setLocation] = useState('');
   const [unit, setUnit] = useState('metric');
-  const [activeLetter, setActiveLetter] = useState('C');
 
   const key = process.env.REACT_APP_API_KEY;
 
@@ -43,13 +42,6 @@ function App2() {
     });
   };
 
-  const handleClick = (letter) => {
-    if (letter !== activeLetter) {
-      setActiveLetter(letter);
-      toggleUnit();
-    }
-  };
-
   return (
     <div className="app">
       <div className="search">
@@ -74,25 +66,7 @@ function App2() {
                   {data.main.temp.toFixed()}
                   &deg;{unit === 'metric' ? 'C' : 'F'}
                 </h1>
-                <span>
-                  <p
-                    className={`${
-                      activeLetter === 'C' ? 'active' : ''
-                    } clickable`}
-                    onClick={() => handleClick('C')}
-                  >
-                    &deg;C
-                  </p>
-                  <p>&nbsp;|&nbsp;</p>
-                  <p
-                    className={`${
-                      activeLetter === 'F' ? 'active' : ''
-                    } clickable`}
-                    onClick={() => handleClick('F')}
-                  >
-                    &deg;F
-                  </p>
-                </span>
+                <span onClick={toggleUnit}>&deg;C | &deg;F</span>
               </>
             )}
           </div>
@@ -132,4 +106,4 @@ function App2() {
   );
 }
 
-export default App2;
+export default App1;
