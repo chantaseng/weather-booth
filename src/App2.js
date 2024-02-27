@@ -5,6 +5,7 @@ function App2() {
   const [userInput, setUserInput] = useState('');
   const [location, setLocation] = useState('');
   const [unit, setUnit] = useState('metric');
+  const [isActive, setIsActive] = useState(true);
 
   const key = process.env.REACT_APP_API_KEY;
 
@@ -53,7 +54,12 @@ function App2() {
           type="text"
         />
         <p className="button" onClick={toggleUnit}>
-          &deg;{unit === 'metric' ? 'F' : 'C'}
+          &deg;
+          {unit === 'metric' ? (
+            <span className={isActive ? 'active' : ''}>F</span>
+          ) : (
+            <span className={isActive ? 'active' : ''}>C</span>
+          )}
         </p>
       </div>
 

@@ -49,7 +49,10 @@ h1 {
   position: absolute;
   top: 27%;
   right: 52%;
-  cursor: pointer;
+}
+
+.app .button .active {
+  color: red;
 }
 
 .app input {
@@ -87,6 +90,7 @@ h1 {
   position: absolute;
   right: 60%;
   top: 30%;
+  cursor: pointer;
 }
 
 .app .description {
